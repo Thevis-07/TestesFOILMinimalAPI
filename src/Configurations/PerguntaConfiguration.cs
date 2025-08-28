@@ -1,8 +1,8 @@
-﻿using ConectorAnaliticoApi.Models;
+﻿using TestesFOILMinimalApi.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace ConectorAnaliticoApi.Configurations;
+namespace TestesFOILMinimalApi.Configurations;
 
 public sealed class PerguntaConfiguration : IEntityTypeConfiguration<PerguntaModel>
 {

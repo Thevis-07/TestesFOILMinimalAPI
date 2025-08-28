@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ConectorAnaliticoApi.Models;
+using TestesFOILMinimalApi.Models;
 
-namespace ConectorAnaliticoApi.Data;
+namespace TestesFOILMinimalApi.Data;
 
 public sealed class AppDbContext : DbContext
 {

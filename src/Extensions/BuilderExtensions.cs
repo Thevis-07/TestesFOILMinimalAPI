@@ -1,7 +1,7 @@
-﻿using ConectorAnaliticoApi.Data;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using TestesFOILMinimalApi.Data;
 
-namespace ConectorAnaliticoApi.Extensions
+namespace TestesFOILMinimalApi.Extensions
 {
     public static class BuilderExtensions
     {

@@ -1,4 +1,4 @@
-﻿namespace ConectorAnaliticoApi.Dtos
+﻿namespace TestesFOILMinimalApi.Dtos
 {
     public class Basedto
     {

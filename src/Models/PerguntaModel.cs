@@ -1,4 +1,4 @@
-﻿namespace ConectorAnaliticoApi.Models;
+﻿namespace TestesFOILMinimalApi.Models;
 
 public class PerguntaModel
 {

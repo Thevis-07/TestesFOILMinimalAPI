@@ -1,4 +1,4 @@
-﻿namespace ConectorAnaliticoApi.Endpoints
+﻿namespace TestesFOILMinimalApi.Endpoints
 {
     public static class HomeEndpoints
     {

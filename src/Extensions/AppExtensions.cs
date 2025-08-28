@@ -1,4 +1,4 @@
-﻿namespace ConectorAnaliticoApi.Extensions
+﻿namespace TestesFOILMinimalApi.Extensions
 {
     public static class AppExtensions
     {

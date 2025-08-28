@@ -1,4 +1,4 @@
-﻿namespace ConectorAnaliticoApi.Services
+﻿namespace TestesFOILMinimalApi.Services
 {
     public class BaseService
     {

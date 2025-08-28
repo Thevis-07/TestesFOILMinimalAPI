@@ -1,2 +1,2 @@
-﻿global using ConectorAnaliticoApi.Extensions;
-global using ConectorAnaliticoApi.Endpoints;
+﻿global using TestesFOILMinimalApi.Extensions;
+global using TestesFOILMinimalApi.Endpoints;
