@@ -4,7 +4,6 @@
     {
         public static void UseArchitectures(this WebApplication app)
         {
-            app.MapControllers();
         }
     }
 }

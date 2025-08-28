@@ -6,6 +6,8 @@ builder.AddArchitectures()
 var app = builder.Build();
 
 app.MapHomeEndpoints();
+app.MapAlunoEndpoints();
+app.MapRespostaEndpoints();
 
 app.UseArchitectures();
 
