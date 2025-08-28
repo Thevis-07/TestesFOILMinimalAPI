@@ -1,0 +1,52 @@
+# Ignorar a pasta do Visual Studio
+.vs/
+
+## Build results
+bin/
+obj/
+out/
+
+## User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+## OS files
+.DS_Store
+Thumbs.db
+
+## Rider / VS Code / VS
+.vscode/
+.idea/
+*.code-workspace
+
+## Logs
+*.log
+
+## Packages
+*.nupkg
+*.snupkg
+packages/
+*.nuget.props
+
+## ASP.NET Core generated files
+wwwroot/lib/
+appsettings.*.json
+appsettings.Development.json
+
+## Publish output
+publish/
+*.Publish.xml
+
+## Secrets (caso use Secret Manager)
+secrets.json
+
+## Others
+.env
+*.db
+*.sqlite
+*.pfx
+*.cer
+*.key
+*.pem
