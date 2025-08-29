@@ -12,8 +12,8 @@ using TestesFOILMinimalApi.Data;
 namespace TestesFOILMinimalApi.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250828135338_CorrecaoNomesColunas")]
-    partial class CorrecaoNomesColunas
+    [Migration("20250829130256_AdicionarTabelas")]
+    partial class AdicionarTabelas
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -49,6 +49,12 @@ namespace TestesFOILMinimalApi.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("idade");
 
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("character varying(150)")
+                        .HasColumnName("nome");
+
                     b.Property<int>("Semestre")
                         .HasColumnType("integer")
                         .HasColumnName("semestre");
@@ -60,11 +66,11 @@ namespace TestesFOILMinimalApi.Migrations
 
             modelBuilder.Entity("TestesFOILMinimalApi.Models.CategoriaPerguntaModel", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid")
+                        .HasColumnName("id")
+                        .HasDefaultValueSql("gen_random_uuid()");
 
                     b.Property<string>("Nome")
                         .IsRequired()
@@ -91,9 +97,16 @@ namespace TestesFOILMinimalApi.Migrations
                         .HasColumnName("id")
                         .HasDefaultValueSql("gen_random_uuid()");
 
-                    b.Property<int>("CategoriaPerguntaId")
-                        .HasColumnType("integer")
+                    b.Property<Guid>("CategoriaPerguntaId")
+                        .HasColumnType("uuid")
                         .HasColumnName("categoria_pergunta_id");
+
+                    b.Property<int>("Ordem")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("ordem");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Ordem"));
 
                     b.Property<string>("Texto")
                         .IsRequired()
@@ -148,16 +161,20 @@ namespace TestesFOILMinimalApi.Migrations
                         .HasDefaultValueSql("gen_random_uuid()");
 
                     b.Property<Guid>("AlunoId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("aluno_id");
 
-                    b.Property<int>("CategoriaId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("CategoriaId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("categoria_id");
 
                     b.Property<int>("TotalMae")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("total_mae");
 
                     b.Property<int>("TotalPai")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("total_pai");
 
                     b.HasKey("Id");
 

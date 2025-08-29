@@ -7,7 +7,7 @@
         public Guid AlunoId { get; set; }
         public AlunoModel Aluno { get; set; } = null!;
 
-        public int CategoriaId { get; set; }
+        public Guid CategoriaId { get; set; }
         public CategoriaPerguntaModel Categoria { get; set; } = null!;
 
         public int TotalMae { get; set; }

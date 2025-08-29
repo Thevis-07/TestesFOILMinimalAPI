@@ -63,11 +63,11 @@ namespace TestesFOILMinimalApi.Migrations
 
             modelBuilder.Entity("TestesFOILMinimalApi.Models.CategoriaPerguntaModel", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid")
+                        .HasColumnName("id")
+                        .HasDefaultValueSql("gen_random_uuid()");
 
                     b.Property<string>("Nome")
                         .IsRequired()
@@ -94,8 +94,8 @@ namespace TestesFOILMinimalApi.Migrations
                         .HasColumnName("id")
                         .HasDefaultValueSql("gen_random_uuid()");
 
-                    b.Property<int>("CategoriaPerguntaId")
-                        .HasColumnType("integer")
+                    b.Property<Guid>("CategoriaPerguntaId")
+                        .HasColumnType("uuid")
                         .HasColumnName("categoria_pergunta_id");
 
                     b.Property<int>("Ordem")
@@ -161,8 +161,8 @@ namespace TestesFOILMinimalApi.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("aluno_id");
 
-                    b.Property<int>("CategoriaId")
-                        .HasColumnType("integer")
+                    b.Property<Guid>("CategoriaId")
+                        .HasColumnType("uuid")
                         .HasColumnName("categoria_id");
 
                     b.Property<int>("TotalMae")

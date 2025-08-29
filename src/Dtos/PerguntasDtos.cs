@@ -2,8 +2,8 @@
 {
     public class PerguntasDtos
     {
-        public record PerguntaCreateDto(string Texto, int CategoriaPerguntaId);
-        public record PerguntaUpdateDto(string Texto, int CategoriaPerguntaId);
-        public record PerguntaDto(Guid Id, string Texto, int CategoriaPerguntaId, string? CategoriaNome);
+        public record PerguntaCreateDto(string Texto, Guid CategoriaPerguntaId);
+        public record PerguntaUpdateDto(string Texto, Guid CategoriaPerguntaId);
+        public record PerguntaDto(Guid Id, string Texto, Guid CategoriaPerguntaId, string? CategoriaNome);
     }
 }

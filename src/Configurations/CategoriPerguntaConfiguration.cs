@@ -12,6 +12,11 @@ namespace TestesFOILMinimalApi.Configurations
 
             builder.HasKey(c => c.Id);
 
+            builder.Property(c => c.Id)
+                .IsRequired()
+                .HasColumnName("id")
+                .HasDefaultValueSql("gen_random_uuid()");
+
             builder.Property(c => c.Nome)
                 .HasColumnName("nome")
                 .IsRequired()

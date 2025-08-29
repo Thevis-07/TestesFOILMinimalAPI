@@ -12,7 +12,7 @@ namespace TestesFOILMinimalApi.Extensions
         public static WebApplicationBuilder AddArchitectures(this WebApplicationBuilder builder)
         {
 
-            var cs = builder.Configuration.GetConnectionString("Postgres");
+            var cs = Environment.GetEnvironmentVariable("POSTGRES_CS");
 
             builder.Services.AddDbContextPool<AppDbContext>(opt =>
             {
