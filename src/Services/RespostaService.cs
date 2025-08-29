@@ -9,15 +9,13 @@ namespace TestesFOILMinimalApi.Services;
 public class RespostaService : IRespostaService
 {
     private readonly AppDbContext _db;
-    private readonly ResultadoService _resultadoService; // se preferir interface, extraia IResultadoService
 
-    public RespostaService(AppDbContext db, ResultadoService resultadoService)
+    public RespostaService(AppDbContext db)
     {
         _db = db;
-        _resultadoService = resultadoService;
     }
 
-    public async Task<RespostaModel> SaveAsync(RespostaCreateDto input, bool recalcResultado = false)
+    public async Task<RespostaModel> SaveAsync(RespostaCreateDto input)
     {
         // validações básicas
         if (input.ValorMae < 0 || input.ValorPai < 0)
@@ -44,7 +42,6 @@ public class RespostaService : IRespostaService
         {
             resp = new RespostaModel
             {
-                Id = Guid.NewGuid(),
                 AlunoId = input.AlunoId,
                 PerguntaId = input.PerguntaId,
                 ValorMae = input.ValorMae,
@@ -60,26 +57,22 @@ public class RespostaService : IRespostaService
 
         await _db.SaveChangesAsync();
 
-        if (recalcResultado)
-            await _resultadoService.CalcularResultados(input.AlunoId);
-
         return resp;
     }
 
-    public async Task<IReadOnlyList<RespostaModel>> SaveManyAsync(IEnumerable<RespostaCreateDto> inputs, bool recalcResultado = false)
+    public async Task<IReadOnlyList<RespostaModel>> SaveManyAsync(RespostaCreateListDto input)
     {
-        var list = inputs.ToList();
+        var list = input.Respostas.ToList();
         if (list.Count == 0) return Array.Empty<RespostaModel>();
 
         // valida FK aluno (assumindo todos do mesmo aluno no bulk)
-        var alunoId = list[0].AlunoId;
-        var alunoExists = await _db.Alunos.AnyAsync(a => a.Id == alunoId);
+        var alunoExists = await _db.Alunos.AnyAsync(a => a.Id == input.AlunoId);
         if (!alunoExists) throw new ArgumentException("Aluno inexistente.");
 
         // carrega respostas existentes do aluno p/ upsert em memória
         var perguntaIds = list.Select(i => i.PerguntaId).Distinct().ToArray();
         var existentes = await _db.Respostas
-            .Where(r => r.AlunoId == alunoId && perguntaIds.Contains(r.PerguntaId))
+            .Where(r => r.AlunoId == input.AlunoId && perguntaIds.Contains(r.PerguntaId))
             .ToListAsync();
 
         var resultado = new List<RespostaModel>(list.Count);
@@ -95,8 +88,7 @@ public class RespostaService : IRespostaService
             {
                 var novo = new RespostaModel
                 {
-                    Id = Guid.NewGuid(),
-                    AlunoId = i.AlunoId,
+                    AlunoId = input.AlunoId,
                     PerguntaId = i.PerguntaId,
                     ValorMae = i.ValorMae,
                     ValorPai = i.ValorPai
@@ -114,8 +106,6 @@ public class RespostaService : IRespostaService
 
         await _db.SaveChangesAsync();
 
-        if (recalcResultado)
-            await _resultadoService.CalcularResultados(alunoId);
 
         return resultado;
     }

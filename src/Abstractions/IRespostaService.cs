@@ -7,6 +7,7 @@ namespace TestesFOILMinimalApi.Abstractions
 {
     public interface IRespostaService
     {
-        Task<RespostaModel> SaveAsync(RespostaCreateDto input, bool recalcResultado = false);
+        Task<RespostaModel> SaveAsync(RespostaCreateDto input);
+        Task<IReadOnlyList<RespostaModel>> SaveManyAsync(RespostaCreateListDto inputs);
     }
 }

@@ -35,9 +35,9 @@ namespace TestesFOILMinimalApi.Extensions
 
         public static WebApplicationBuilder AddServices(this WebApplicationBuilder builder)
         {
+            builder.Services.AddScoped<IResultadoService, ResultadoService>();
             builder.Services.AddScoped<IPerguntaService, PerguntaService>();
             builder.Services.AddScoped<IRespostaService, RespostaService>();
-            builder.Services.AddScoped<ResultadoService>();
             builder.Services.AddScoped<IAlunoService, AlunoService>(); 
 
 

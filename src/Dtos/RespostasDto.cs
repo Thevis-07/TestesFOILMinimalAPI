@@ -8,5 +8,15 @@
             int ValorMae,
             int ValorPai
         );
+
+        public record RespostaCreateListDto(
+            Guid AlunoId,IEnumerable<RespostaItem> Respostas
+        );
+
+        public record RespostaItem(
+            Guid PerguntaId,
+            int ValorMae,
+            int ValorPai
+        );
     }
 }

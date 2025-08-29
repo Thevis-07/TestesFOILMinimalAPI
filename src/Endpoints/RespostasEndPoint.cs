@@ -11,7 +11,7 @@ namespace TestesFOILMinimalApi.Endpoints
             {
                 try
                 {
-                    var resposta = await service.SaveAsync(input, recalcResultado: true);
+                    var resposta = await service.SaveAsync(input);
                     return Results.Created($"/respostas/{resposta.Id}", resposta);
                 }
                 catch (ArgumentException ex)
@@ -19,6 +19,25 @@ namespace TestesFOILMinimalApi.Endpoints
                     return Results.BadRequest(new { error = ex.Message });
                 }
 
+                catch (Exception)
+                {
+                    return Results.StatusCode(500);
+                }
+            });
+
+            app.MapPost("/respostas/bulk", async (
+                IRespostaService service,
+                RespostasDto.RespostaCreateListDto input) =>
+            {
+                try
+                {
+                    var respostas = await service.SaveManyAsync(input);
+                    return Results.Ok(respostas);
+                }
+                catch (ArgumentException ex)
+                {
+                    return Results.BadRequest(new { error = ex.Message });
+                }
                 catch (Exception)
                 {
                     return Results.StatusCode(500);
