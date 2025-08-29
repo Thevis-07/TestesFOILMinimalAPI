@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TestesFOILMinimalApi.Abstractions;
 using TestesFOILMinimalApi.Data;
+using TestesFOILMinimalApi.Dtos;
 using TestesFOILMinimalApi.Models;
 using static TestesFOILMinimalApi.Dtos.RespostasDto;
 
@@ -60,19 +61,21 @@ public class RespostaService : IRespostaService
         return resp;
     }
 
-    public async Task<IReadOnlyList<RespostaModel>> SaveManyAsync(RespostaCreateListDto input)
+    public async Task<IEnumerable<RespostaReadDto>> SaveManyAsync(RespostaCreateListDto dto)
     {
-        var list = input.Respostas.ToList();
-        if (list.Count == 0) return Array.Empty<RespostaModel>();
+        var list = dto.Respostas.ToList();
+        if (list.Count == 0) return Array.Empty<RespostasDto.RespostaReadDto>();
 
-        // valida FK aluno (assumindo todos do mesmo aluno no bulk)
-        var alunoExists = await _db.Alunos.AnyAsync(a => a.Id == input.AlunoId);
-        if (!alunoExists) throw new ArgumentException("Aluno inexistente.");
+        var aluno = await _db.Alunos.FirstOrDefaultAsync(a => a.Id == dto.AlunoId);
+        if (aluno is null) throw new ArgumentException("Aluno inexistente.");
 
-        // carrega respostas existentes do aluno p/ upsert em memória
         var perguntaIds = list.Select(i => i.PerguntaId).Distinct().ToArray();
+        var perguntas = await _db.Perguntas
+            .Where(p => perguntaIds.Contains(p.Id))
+            .ToDictionaryAsync(p => p.Id);
+
         var existentes = await _db.Respostas
-            .Where(r => r.AlunoId == input.AlunoId && perguntaIds.Contains(r.PerguntaId))
+            .Where(r => r.AlunoId == dto.AlunoId && perguntaIds.Contains(r.PerguntaId))
             .ToListAsync();
 
         var resultado = new List<RespostaModel>(list.Count);
@@ -82,13 +85,15 @@ public class RespostaService : IRespostaService
             if (i.ValorMae is < 0 or > 10 || i.ValorPai is < 0 or > 10)
                 throw new ArgumentOutOfRangeException("Valores devem estar entre 0 e 10.");
 
-            // (opcional) validar existência da pergunta individualmente apenas se desejar
+            if (!perguntas.ContainsKey(i.PerguntaId))
+                throw new ArgumentException($"Pergunta {i.PerguntaId} inexistente.");
+
             var existente = existentes.FirstOrDefault(r => r.PerguntaId == i.PerguntaId);
             if (existente is null)
             {
                 var novo = new RespostaModel
                 {
-                    AlunoId = input.AlunoId,
+                    AlunoId = dto.AlunoId,
                     PerguntaId = i.PerguntaId,
                     ValorMae = i.ValorMae,
                     ValorPai = i.ValorPai
@@ -106,7 +111,14 @@ public class RespostaService : IRespostaService
 
         await _db.SaveChangesAsync();
 
+        var respostaDtos = resultado.Select(r => new RespostasDto.RespostaReadDto(
+            Id: r.Id,
+            Aluno: aluno.Nome,
+            Pergunta: perguntas[r.PerguntaId].Texto,
+            ValorMae: r.ValorMae,
+            ValorPai: r.ValorPai
+        )).ToList();
 
-        return resultado;
+        return respostaDtos;
     }
 }

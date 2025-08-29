@@ -18,5 +18,13 @@
             int ValorMae,
             int ValorPai
         );
+
+        public record RespostaReadDto(
+            Guid Id,
+            string Aluno,
+            string Pergunta,
+            int ValorMae,
+            int ValorPai
+        );
     }
 }

@@ -20,7 +20,6 @@ namespace TestesFOILMinimalApi.Services
                 .Where(r => r.AlunoId == alunoId)
                 .ToListAsync();
 
-            // Fix: Pass all required constructor parameters to ResultadoReadDto
             var resultados = respostas
                     .GroupBy(r => new { r.Pergunta.CategoriaPerguntaId, r.Pergunta.CategoriaPergunta.Nome, ValeUm = r.Pergunta.CategoriaPergunta.ValeUm })
                     .Select(g => new ResultadoReadDto(
