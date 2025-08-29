@@ -38,7 +38,7 @@ app.MapAlunoEndpoints();
 app.MapRespostaEndpoints();
 app.MapPerguntaEndpoints();
 app.MapResultadoEndpoints();
-
+app.UseCors();
 app.UseArchitectures();
 
 app.Run();
