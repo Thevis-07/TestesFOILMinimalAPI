@@ -43,6 +43,12 @@ namespace TestesFOILMinimalApi.Endpoints
                     return Results.StatusCode(500);
                 }
             });
+
+            app.MapGet("/respostas/{alunoId:guid}", async (IRespostaService service, Guid alunoId) =>
+            {
+                var result = await service.ListDetalhadaAsync(alunoId);
+                return Results.Ok(result);
+            });
         }
     }
 }

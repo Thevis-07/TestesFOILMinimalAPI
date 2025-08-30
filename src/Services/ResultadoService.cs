@@ -41,7 +41,7 @@ namespace TestesFOILMinimalApi.Services
             _db.Resultados.RemoveRange(antigos);
             await _db.SaveChangesAsync();
 
-            return resultados;
+            return resultados.OrderByDescending(x => x.TotalPai + x.TotalMae);
         }
     }
 }

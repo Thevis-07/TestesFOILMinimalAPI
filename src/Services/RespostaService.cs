@@ -121,4 +121,23 @@ public class RespostaService : IRespostaService
 
         return respostaDtos;
     }
+
+    public async Task<IEnumerable<RespostaDetalhadaDto>> ListDetalhadaAsync(Guid alunoId)
+    {
+        var respostas = await _db.Respostas
+            .Where(r => r.AlunoId == alunoId)
+            .Include(r => r.Aluno)
+            .Include(r => r.Pergunta)
+            .OrderBy(r => r.Pergunta.Texto)
+            .ToListAsync();
+
+        return respostas.Select(r => new RespostaDetalhadaDto(
+            AlunoId: r.AlunoId,
+            AlunoNome: r.Aluno.Nome,
+            PerguntaId: r.PerguntaId,
+            PerguntaNome: r.Pergunta.Texto,
+            ValorMae: r.ValorMae,
+            ValorPai: r.ValorPai
+        ));
+    }
 }

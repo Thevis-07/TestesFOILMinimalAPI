@@ -26,5 +26,14 @@
             int ValorMae,
             int ValorPai
         );
+
+        public record RespostaDetalhadaDto(
+            Guid AlunoId,
+            string AlunoNome,
+            Guid PerguntaId,
+            string PerguntaNome,
+            int ValorMae,
+            int ValorPai
+        );
     }
 }
