@@ -5,8 +5,8 @@
         public record ResultadoReadDto(
             Guid Id,
             string Aluno,
-            Guid CategoriaId,
             string CategoriaNome,
+            string CategoriaAbreviacao,
             int TotalMae,
             int TotalPai
         );

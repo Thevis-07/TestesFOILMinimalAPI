@@ -26,6 +26,12 @@ namespace TestesFOILMinimalApi.Configurations
                 .HasColumnName("vale_um")
                 .IsRequired(false)
                 .HasDefaultValue(false);
+
+            builder.Property(c => c.Abreviacao)
+                .HasColumnName("abreviacao")
+                .HasMaxLength(10)
+                .IsRequired(false)
+                .HasDefaultValue(false);
         }
     }
 }

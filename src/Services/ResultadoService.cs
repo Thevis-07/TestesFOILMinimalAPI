@@ -21,12 +21,12 @@ namespace TestesFOILMinimalApi.Services
                 .ToListAsync();
 
             var resultados = respostas
-                    .GroupBy(r => new { r.Pergunta.CategoriaPerguntaId, r.Pergunta.CategoriaPergunta.Nome, ValeUm = r.Pergunta.CategoriaPergunta.ValeUm })
+                    .GroupBy(r => new { r.Pergunta.CategoriaPerguntaId, r.Pergunta.CategoriaPergunta.Nome, ValeUm = r.Pergunta.CategoriaPergunta.ValeUm, Abreviacao = r.Pergunta.CategoriaPergunta.Abreviacao })
                     .Select(g => new ResultadoReadDto(
                         Id: Guid.NewGuid(),
                         Aluno: g.First().Aluno.Nome,
-                        CategoriaId: g.Key.CategoriaPerguntaId,
                         CategoriaNome: g.Key.Nome,
+                        CategoriaAbreviacao: g.Key.Abreviacao,
                         TotalMae: g.Key.ValeUm == true
                             ? g.Count(r => r.ValorMae == 1 || r.ValorMae == 2)
                             : g.Count(r => r.ValorMae > 4),

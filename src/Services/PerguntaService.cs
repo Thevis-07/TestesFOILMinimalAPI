@@ -33,6 +33,7 @@ namespace TestesFOILMinimalApi.Services
         public async Task<List<PerguntaDto>> ListAsync() =>
             await db.Perguntas.AsNoTracking()
                 .Include(p => p.CategoriaPergunta)
+                .OrderBy(p => p.Ordem)
                 .Select(p => new PerguntaDto(p.Id, p.Texto, p.CategoriaPerguntaId, p.CategoriaPergunta.Nome))
                 .ToListAsync();
 
