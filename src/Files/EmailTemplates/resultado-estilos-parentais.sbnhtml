@@ -1,97 +1,119 @@
 ﻿<!doctype html>
 <html lang="pt-br">
-<head>
-  <meta charset="utf-8">
-  <title>Resultado Estilos Parentais</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <style>
-    /* será INLINADO pelo PreMailer.Net */
-    .page   { width:100%; background:#f5f7fb; padding:24px 0; }
-    .card   { width:600px; margin:0 auto; background:#fff; border:1px solid #e6eaf0; border-radius:12px; }
-    .pad    { padding:24px; }
-    .muted  { color:#6b7785; }
-    .label  { font:600 11px system-ui,-apple-system,Segoe UI,Roboto,Arial; text-transform:uppercase; letter-spacing:.3px; color:#6b7785; }
-    .value  { font:600 14px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Arial; color:#0f1720; }
-    .logo   { width:72px; height:72px; object-fit:contain; }
-    .divider{ height:1px; background:#e6eaf0; }
-    .th     { font:600 12px system-ui; color:#475569; text-align:left; padding:12px 16px; border-bottom:1px solid #e6eaf0; background:#f8fafc; }
-    .td     { font:400 14px/1.5 system-ui; color:#111827; padding:12px 16px; border-bottom:1px solid #eef2f6; }
-    .num    { text-align:center; font-weight:700; color:#111827; }
-    @media (max-width:640px) { .card{ width:100%!important; border-radius:0!important; } .pad{ padding:16px!important; } .th,.td{ padding:10px 12px!important; } }
-  </style>
-</head>
-<body>
-  <table class="page" role="presentation" cellpadding="0" cellspacing="0">
-    <tr>
-      <td align="center">
-        <table class="card" role="presentation" cellpadding="0" cellspacing="0">
-          <!-- header -->
-          <tr>
-            <td class="pad">
-              <table role="presentation" cellpadding="0" cellspacing="0" width="100%">
-                <tr>
-                  <td valign="top">
-                    <table role="presentation" cellpadding="0" cellspacing="0" width="100%">
-                      <tr>
-                        <td width="50%" style="padding-bottom:8px;">
-                          <div class="label">Nome</div>
-                          <div class="value">{{ aluno.nome }}</div>
-                        </td>
-                        <td width="50%" style="padding-bottom:8px;">
-                          <div class="label">Curso</div>
-                          <div class="value">{{ aluno.curso ?? "—" }}</div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td width="50%">
-                          <div class="label">Idade</div>
-                          <div class="value">{{ aluno.idade ?? "—" }}</div>
-                        </td>
-                        <td width="50%">
-                          <div class="label">Semestre / Módulo</div>
-                          <div class="value">{{ aluno.semestre ?? "—" }}</div>
-                        </td>
-                      </tr>
-                    </table>
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
+	<head>
+		<meta charset="utf-8">
+			<title>Resultado Estilos Parentais</title>
+			<meta name="viewport" content="width=device-width, initial-scale=1" />
+			<style>
+				body,table,td { font-family: Arial, Helvetica, sans-serif; }
+				.container { width:100%; max-width: 680px; margin:0 auto; }
+				.card { background:#ffffff; border-radius:10px; border:1px solid #e5e7eb; }
+				.pad { padding:24px; }
+				h1 { font-size:20px; margin:0 0 12px; color:#111827; }
+				.meta { width:100%; border-collapse:collapse; }
+				.meta th { text-transform:uppercase; font-size:11px; letter-spacing:.04em; color:#6b7280; text-align:left; padding:0 0 6px; }
+				.meta td { font-size:14px; color:#111827; padding:0 24px 6px 0; }
 
-          <tr><td><div class="divider"></div></td></tr>
+				.table { width:100%; border-collapse:collapse; }
+				.th { text-align:left; font-size:12px; color:#6b7280; border-bottom:1px solid #e5e7eb; padding:10px 0; }
+				.td { font-size:14px; color:#111827; border-bottom:1px solid #f3f4f6; padding:12px 0 6px; vertical-align:top; font-weight:600; }
+				.num { text-align:center; font-weight:bold; width:120px; }
+				.descricao { font-size:13px; color:#4b5563; line-height:1.45; padding:6px 0 14px; }
+				.muted { color:#6b7280; font-size:12px; }
+				.hr { height:1px; background:#e5e7eb; border:none; margin:16px 0; }
 
-          <!-- tabela -->
-          <tr>
-            <td class="pad" style="padding-top:16px;">
-              <table role="presentation" cellpadding="0" cellspacing="0" width="100%">
-                <tr>
-                  <th class="th">Estilos Parentais</th>
-                  <th class="th" width="120">Valor Pai</th>
-                  <th class="th" width="120">Valor Mãe</th>
-                </tr>
+				/* listrado 2x2 só no corpo da tabela */
+				.table tbody tr:nth-child(4n+1),
+				.table tbody tr:nth-child(4n+2) { background-color:#ffffff; }  /* claras */
 
-                {{ for item in itens }}
-                <tr>
-                  <td class="td">{{ item.categoria_nome }}</td>
-                  <td class="td num">{{ item.total_pai }}</td>
-                  <td class="td num">{{ item.total_mae }}</td>
-                </tr>
-                {{ end }}
-              </table>
-            </td>
-          </tr>
+				.table tbody tr:nth-child(4n+3),
+				.table tbody tr:nth-child(4n+4) { background-color:#f3f4f6; }  /* escuras */
+			</style>
+		</head>
+	<body>
+		<table class="page" role="presentation" cellpadding="0" cellspacing="0" width="100%">
+			<tr>
+				<td align="center">
+					<table class="card container" role="presentation" cellpadding="0" cellspacing="0" width="100%">
+						<!-- header -->
+						<tr>
+							<td class="pad">
+								<table role="presentation" cellpadding="0" cellspacing="0" width="100%">
+									<tr>
+										<td valign="top">
+											<table role="presentation" cellpadding="0" cellspacing="0" width="100%">
+												<tr>
+													<td width="50%" style="padding-bottom:8px;">
+														<div class="label">Nome</div>
+														<div class="value">{{ aluno.nome }}</div>
+													</td>
+													<td width="50%" style="padding-bottom:8px;">
+														<div class="label">Curso</div>
+														<div class="value">{{ aluno.curso ?? "—" }}</div>
+													</td>
+												</tr>
+												<tr>
+													<td width="50%">
+														<div class="label">Idade</div>
+														<div class="value">{{ aluno.idade ?? "—" }}</div>
+													</td>
+													<td width="50%">
+														<div class="label">Semestre / Módulo</div>
+														<div class="value">{{ aluno.semestre ?? "—" }}</div>
+													</td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
 
-          <!-- rodapé simples -->
-          <tr>
-            <td class="pad" style="padding-top:8px; color:#6b7785; font:400 12px/1.6 system-ui; border-top:1px solid #e6eaf0;">
-              © {{ now | date.to_string "%Y" }} • Este é um e-mail automático.
-            </td>
-          </tr>
+						<tr>
+							<td>
+								<div class="hr"></div>
+							</td>
+						</tr>
 
-        </table>
-      </td>
-    </tr>
-  </table>
-</body>
+						<!-- tabela -->
+						<tr>
+							<td class="pad" style="padding-top:16px;">
+								<table role="presentation" class="table" cellpadding="0" cellspacing="0" width="100%">
+									<thead>
+										<tr>
+											<th class="th">Estilos Parentais</th>
+											<th class="th" width="120">Valor Pai</th>
+											<th class="th" width="120">Valor Mãe</th>
+										</tr>
+									</thead>
+									<tbody>
+										{{ for item in itens }}
+										<tr>
+											<td class="td">{{ item.categoria_nome }}</td>
+											<td class="td num">{{ item.total_pai }}</td>
+											<td class="td num">{{ item.total_mae }}</td>
+										</tr>
+										<tr>
+											<td class="td descricao" colspan="3">
+												{{ item.categoria_descricao }}
+											</td>
+										</tr>
+										{{ end }}
+									</tbody>
+								</table>
+							</td>
+						</tr>
+
+						<!-- rodapé -->
+						<tr>
+							<td class="pad" style="padding-top:8px; color:#6b7785; font:400 12px/1.6 system-ui; border-top:1px solid #e6eaf0;">
+								© {{ now | date.to_string "%Y" }} • Este é um e-mail automático.
+							</td>
+						</tr>
+
+					</table>
+				</td>
+			</tr>
+		</table>
+	</body>
 </html>

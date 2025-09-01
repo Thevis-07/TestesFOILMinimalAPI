@@ -80,6 +80,7 @@ namespace TestesFOILMinimalApi.Services
                 Aluno: aluno.Nome,
                 CategoriaNome: i.CategoriaNome,
                 CategoriaAbreviacao: i.CategoriaAbreviacao,
+                CategoriaDescricao: i.CategoriaDescricao,
                 TotalMae: i.TotalMae,
                 TotalPai: i.TotalPai
             )).ToList();

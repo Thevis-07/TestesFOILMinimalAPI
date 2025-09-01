@@ -49,7 +49,11 @@ namespace TestesFOILMinimalApi.Services
             var sb = new StringBuilder()
                 .AppendLine($"Resultado — {aluno.nome}");
             foreach (var i in lista)
+            {
                 sb.AppendLine($"{i.CategoriaNome}: Pai {i.TotalPai} | Mãe {i.TotalMae}");
+                if (!string.IsNullOrWhiteSpace(i.CategoriaDescricao))
+                    sb.AppendLine($"  -> {i.CategoriaDescricao}");
+            }
             var textAlt = sb.ToString();
 
             var subject = $"{(string.IsNullOrWhiteSpace(subjectPrefix) ? "Resultado Estilos Parentais" : subjectPrefix)} — {aluno.nome}";

@@ -7,6 +7,7 @@
             string Aluno,
             string CategoriaNome,
             string CategoriaAbreviacao,
+            string CategoriaDescricao,
             int TotalMae,
             int TotalPai
         );
