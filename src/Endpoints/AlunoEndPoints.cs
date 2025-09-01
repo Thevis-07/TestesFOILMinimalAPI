@@ -20,7 +20,6 @@ namespace TestesFOILMinimalApi.Endpoints
                 }
                 catch (Exception ex)
                 {
-                    // retorna 500 + mensagem do erro
                     return Results.Problem(
                         detail: ex.Message,
                         statusCode: 500,

@@ -1,3 +1,4 @@
+using System;
 using TestesFOILMinimalApi.Abstractions;
 using TestesFOILMinimalApi.Dtos;
 
@@ -11,19 +12,21 @@ namespace TestesFOILMinimalApi.Endpoints
             {
                 try
                 {
-                    var resultados = await service.CalcularResultadoAsync(alunoId);
-                    if (resultados == null || !resultados.Any())
-                        return Results.NotFound(new { error = "Nenhum resultado encontrado ou calculável para o aluno." });
+                    var resultado = await service.CalcularResultadoAsync(alunoId);
 
-                    return Results.Ok(resultados);
+                    return Results.Ok(resultado);
                 }
                 catch (ArgumentException ex)
                 {
                     return Results.BadRequest(new { error = ex.Message });
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    return Results.StatusCode(500);
+                    return Results.Problem(
+                    detail: ex.Message,
+                    statusCode: 500,
+                    title: "Erro interno no servidor"
+                );
                 }
             });
         }

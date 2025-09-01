@@ -7,6 +7,6 @@ namespace TestesFOILMinimalApi.Abstractions
 {
     public interface IResultadoService
     {
-        Task<IEnumerable<ResultadoReadDto>> CalcularResultadoAsync(Guid alunoId);
+        Task<ResultadoReadDto> CalcularResultadoAsync(Guid alunoId);
     }
 }

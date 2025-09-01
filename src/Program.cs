@@ -1,9 +1,11 @@
+
 Env.Load();
 
 var builder = WebApplication.CreateSlimBuilder(args);
 
 builder.AddArchitectures()
         .AddServices();
+
 
 builder.Services.AddCors(options =>
 {

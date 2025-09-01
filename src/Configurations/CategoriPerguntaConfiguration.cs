@@ -32,6 +32,11 @@ namespace TestesFOILMinimalApi.Configurations
                 .HasMaxLength(10)
                 .IsRequired(false)
                 .HasDefaultValue(false);
+
+            builder.Property(c => c.Descricao)
+                .HasColumnName("descricao")
+                .HasMaxLength(1500)
+                .IsRequired();
         }
     }
 }

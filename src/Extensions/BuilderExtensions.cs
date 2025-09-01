@@ -3,6 +3,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization.Metadata;
 using TestesFOILMinimalApi.Abstractions;
 using TestesFOILMinimalApi.Data;
+using TestesFOILMinimalApi.Options;
 using TestesFOILMinimalApi.Services;
 
 namespace TestesFOILMinimalApi.Extensions
@@ -30,6 +31,8 @@ namespace TestesFOILMinimalApi.Extensions
                 opt.SerializerOptions.TypeInfoResolverChain.Add(new DefaultJsonTypeInfoResolver());
             });
 
+            builder.Services.Configure<SmtpOptions>(builder.Configuration.GetSection("Smtp"));
+
             return builder;
         } 
 
@@ -39,6 +42,7 @@ namespace TestesFOILMinimalApi.Extensions
             builder.Services.AddScoped<IPerguntaService, PerguntaService>();
             builder.Services.AddScoped<IRespostaService, RespostaService>();
             builder.Services.AddScoped<IAlunoService, AlunoService>(); 
+            builder.Services.AddScoped<IEmailService, EmailService>();
 
 
 

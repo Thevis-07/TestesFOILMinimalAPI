@@ -1,14 +1,18 @@
-﻿namespace TestesFOILMinimalApi.Dtos
+﻿using static TestesFOILMinimalApi.Dtos.AlunosDto;
+
+namespace TestesFOILMinimalApi.Dtos
 {
     public class ResultadosDto
     {
         public record ResultadoReadDto(
-            Guid Id,
-            string Aluno,
+            AlunoReadDto aluno, IEnumerable<ResultadoItemDto> resultado
+        );
+
+        public record ResultadoItemDto(
             string CategoriaNome,
             string CategoriaAbreviacao,
+            string CategoriaDescricao,
             int TotalMae,
-            int TotalPai
-        );
+            int TotalPai);
     }
 }
