@@ -51,8 +51,9 @@ namespace TestesFOILMinimalApi.Services
             foreach (var i in lista)
             {
                 sb.AppendLine($"{i.CategoriaNome}: Pai {i.TotalPai} | Mãe {i.TotalMae}");
-                if (!string.IsNullOrWhiteSpace(i.CategoriaDescricao))
-                    sb.AppendLine($"  -> {i.CategoriaDescricao}");
+                // Descomentar para adicionar descricao
+                //if (!string.IsNullOrWhiteSpace(i.CategoriaDescricao))
+                //    sb.AppendLine($"  -> {i.CategoriaDescricao}");
             }
             var textAlt = sb.ToString();
 

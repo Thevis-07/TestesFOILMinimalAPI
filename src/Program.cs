@@ -1,4 +1,3 @@
-
 Env.Load();
 
 var builder = WebApplication.CreateSlimBuilder(args);
