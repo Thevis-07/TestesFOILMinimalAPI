@@ -91,8 +91,8 @@
                 <thead>
                   <tr>
                     <th class="th">Estilos Parentais</th>
-                    <th class="th" width="120">Valor Pai</th>
-                    <th class="th" width="120">Valor Mãe</th>
+                    <th class="th" width="120">Pai</th>
+                    <th class="th" width="120">Mãe</th>
                   </tr>
                 </thead>
                 <tbody>
