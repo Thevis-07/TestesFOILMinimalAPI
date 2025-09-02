@@ -50,7 +50,7 @@ namespace TestesFOILMinimalApi.Services
                 .AppendLine($"Resultado — {aluno.nome}");
             foreach (var i in lista)
             {
-                sb.AppendLine($"{i.CategoriaNome}: Pai {i.TotalPai} | Mãe {i.TotalMae}");
+                sb.AppendLine($"{i.CategoriaAbreviacao}: Pai {i.TotalPai} | Mãe {i.TotalMae}");
                 // Descomentar para adicionar descricao
                 //if (!string.IsNullOrWhiteSpace(i.CategoriaDescricao))
                 //    sb.AppendLine($"  -> {i.CategoriaDescricao}");
