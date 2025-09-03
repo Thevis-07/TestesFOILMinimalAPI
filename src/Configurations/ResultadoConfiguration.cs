@@ -31,6 +31,10 @@ namespace TestesFOILMinimalApi.Configurations
                 .HasColumnName("categoria_id")
                 .IsRequired();
 
+            b.Property(r => r.CriadoEm)
+                .HasColumnName("criado_em")
+                .IsRequired();
+
             b.HasOne(r => r.Aluno)
                 .WithMany(a => a.Resultados)
                 .HasForeignKey(r => r.AlunoId)

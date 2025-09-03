@@ -13,17 +13,45 @@ namespace TestesFOILMinimalApi.Extensions
         public static WebApplicationBuilder AddArchitectures(this WebApplicationBuilder builder)
         {
 
-            var cs = Environment.GetEnvironmentVariable("POSTGRES_CS");
+            var cs = Environment.GetEnvironmentVariable("POSTGRES_CS")
+                     ?? builder.Configuration.GetConnectionString("Postgres");
+
+            if (string.IsNullOrWhiteSpace(cs))
+                throw new InvalidOperationException(
+                    "Connection string do Postgres não encontrada. " +
+                    "Defina POSTGRES_CS ou ConnectionStrings:Postgres."
+                );
+
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
+            var poolSize = builder.Configuration.GetValue<int?>("DbContextPoolSize") ?? 128;
 
             builder.Services.AddDbContextPool<AppDbContext>(opt =>
             {
                 opt.UseNpgsql(cs, npg =>
-                    npg.MigrationsAssembly(typeof(AppDbContext).Assembly.FullName));
-                opt.EnableSensitiveDataLogging(builder.Environment.IsDevelopment());
-            });
+                {
+                    npg.MigrationsAssembly(typeof(AppDbContext).Assembly.FullName);
 
-            // Para compatibilidade com timestamps antigos (se necessário)
-            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+                    npg.EnableRetryOnFailure(
+                        maxRetryCount: 5,
+                        maxRetryDelay: TimeSpan.FromSeconds(5),
+                        errorCodesToAdd: null
+                    );
+
+                    npg.CommandTimeout(60);
+                });
+
+                if (builder.Environment.IsDevelopment())
+                {
+                    opt.EnableDetailedErrors();
+                    opt.EnableSensitiveDataLogging();
+
+                    opt.LogTo(
+                        Console.WriteLine,
+                        LogLevel.Information
+                    );
+                }
+            }, poolSize);
 
             builder.Services.ConfigureHttpJsonOptions(opt =>
             {

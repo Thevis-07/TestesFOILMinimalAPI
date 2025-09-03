@@ -12,5 +12,6 @@
 
         public int TotalMae { get; set; }
         public int TotalPai { get; set; }
+        public DateTime CriadoEm { get; set; } = DateTime.UtcNow.AddHours(-3);
     }
 }

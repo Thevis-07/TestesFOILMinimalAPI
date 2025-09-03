@@ -9,6 +9,7 @@ namespace TestesFOILMinimalApi.Dtos
         );
 
         public record ResultadoItemDto(
+            Guid CategoriaId,
             string CategoriaNome,
             string CategoriaAbreviacao,
             string CategoriaDescricao,
