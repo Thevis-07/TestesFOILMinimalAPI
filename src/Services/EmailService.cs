@@ -28,12 +28,7 @@ namespace TestesFOILMinimalApi.Services
         }
 
 
-        public async Task SendRelatorioCategoriasAsync(
-            IEnumerable<CategoriaResumoItem> itens,
-            string to,
-            EmailDto.AlunoEmail aluno,
-            string? subjectPrefix = null,
-            CancellationToken ct = default)
+        public async Task SendRelatorioCategoriasAsync(IEnumerable<CategoriaResumoItem> itens, string to, AlunoEmail aluno, string? subjectPrefix = null, CancellationToken ct = default)
         {
             var lista = itens?.ToList() ?? [];
             if (lista.Count == 0)
@@ -42,24 +37,36 @@ namespace TestesFOILMinimalApi.Services
             if (aluno is null || string.IsNullOrWhiteSpace(aluno.nome))
                 throw new ArgumentException("O objeto 'aluno' deve ser informado com 'nome'.", nameof(aluno));
 
-            var model = new EmailDto.EmailAluno(aluno, lista);
+            var itensMae = lista.OrderByDescending(x => x.TotalMae).ToList();
+            var itensPai = lista.OrderByDescending(x => x.TotalPai).ToList();
+
+            var model = new
+            {
+                aluno,
+                itens_mae = itensMae,   
+                itens_pai = itensPai,
+                ano_atual = DateTime.UtcNow.Year
+            };
 
             var html = await RenderTemplateAsync("resultado-estilos-parentais.sbnhtml", model, ct);
 
             var sb = new StringBuilder()
-                .AppendLine($"Resultado — {aluno.nome}");
-            foreach (var i in lista)
-            {
-                sb.AppendLine($"{i.CategoriaAbreviacao}: Pai {i.TotalPai} | Mãe {i.TotalMae}");
-                // Descomentar para adicionar descricao
-                //if (!string.IsNullOrWhiteSpace(i.CategoriaDescricao))
-                //    sb.AppendLine($"  -> {i.CategoriaDescricao}");
-            }
+                .AppendLine($"Resultado — {aluno.nome}")
+                .AppendLine()
+                .AppendLine("Ranking Pai:");
+            foreach (var i in itensPai)
+                sb.AppendLine($"{i.CategoriaAbreviacao}: {i.TotalPai}");
+
+            sb.AppendLine().AppendLine("Ranking Mãe:");
+            foreach (var i in itensMae)
+                sb.AppendLine($"{i.CategoriaAbreviacao}: {i.TotalMae}");
+
             var textAlt = sb.ToString();
 
             var subject = $"{(string.IsNullOrWhiteSpace(subjectPrefix) ? "Resultado Estilos Parentais" : subjectPrefix)} — {aluno.nome}";
             await SendHtmlAsync(to, subject, html, textAlt, ct);
         }
+
 
 
         private async Task<string> RenderTemplateAsync(string templateName, object model, CancellationToken ct)
@@ -78,9 +85,10 @@ namespace TestesFOILMinimalApi.Services
             {
                 Console.WriteLine("[Scriban] Parse errors:");
                 foreach (var m in tpl.Messages)
-                    Console.WriteLine($"");
+                    Console.WriteLine($" - {m}");
                 throw new InvalidOperationException("Template possui erros de sintaxe.");
             }
+
 
             var ctx = new TemplateContext
             {

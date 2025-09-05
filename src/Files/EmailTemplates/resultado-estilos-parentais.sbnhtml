@@ -1,134 +1,145 @@
 ﻿<!doctype html>
 <html lang="pt-br">
-<head>
-  <meta charset="utf-8">
-  <title>Resultado Estilos Parentais</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <style>
-	  body,table,td { font-family: Arial, Helvetica, sans-serif; }
-	  .container { width:100%; max-width: 680px; margin:0 auto; }
-	  .card { background:#ffffff; border-radius:10px; border:1px solid #e5e7eb; }
-	  .pad { padding:24px; }
-	  h1 { font-size:20px; margin:0 0 12px; color:#111827; }
-	  .meta { width:100%; border-collapse:collapse; }
-	  .meta th { text-transform:uppercase; font-size:11px; letter-spacing:.04em; color:#6b7280; text-align:left; padding:0 0 6px; }
-	  .meta td { font-size:14px; color:#111827; padding:0 24px 6px 0; }
+	<head>
+		<meta charset="utf-8">
+			<title>Resultado Estilos Parentais</title>
+			<meta name="viewport" content="width=device-width, initial-scale=1" />
+			<style>
+				body,table,td { font-family: Arial, Helvetica, sans-serif; }
+				.container { width:100%; max-width: 680px; margin:0 auto; }
+				.card { background:#ffffff; border-radius:10px; border:1px solid #e5e7eb; }
+				.pad { padding:24px; }
+				.hr { height:1px; background:#e5e7eb; border:none; margin:16px 0; }
+				.label { color:#6b7280; font-size:12px; }
+				.value { color:#111827; font-size:14px; }
 
-	  .table { width:100%; border-collapse:collapse; }
-	  .th { text-align:left; font-size:12px; color:#6b7280; border-bottom:1px solid #e5e7eb; padding:10px 0; }
-	  .td { font-size:14px; color:#111827; border-bottom:1px solid #f3f4f6; padding:12px 0 6px; vertical-align:top; font-weight:600;  padding-left: 8px}
-	  .td-num { text-align:left; font-weight:bold; width:120px; padding-left: 8px}
-	  .descricao { font-size:13px; color:#4b5563; line-height:1.45; padding:6px 0 14px; }
-	  .muted { color:#6b7280; font-size:12px; }
-	  .hr { height:1px; background:#e5e7eb; border:none; margin:16px 0; }
+				.table { width:100%; border-collapse:collapse; }
+				.th { text-align:left; font-size:12px; color:#6b7280; border-bottom:1px solid #e5e7eb; padding:10px 8px; }
+				.td { font-size:14px; color:#111827; padding:10px 8px; border-bottom:1px solid #f3f4f6; font-weight:600; text-transform:uppercase; }
+				.td-num { width:64px; text-align:left; font-weight:bold; padding-left:15px;}
 
-	  /* ===========================
-	  LISTRADO 2x2
-	  - 1ª e 2ª linhas do bloco: claras
-	  - 3ª e 4ª linhas do bloco: escuras
-	  - Repete automaticamente
-	  ===========================
-	  .table tbody tr:nth-child(4n+1),
-	  .table tbody tr:nth-child(4n+2) { background-color:#ffffff; }
-	  .table tbody tr:nth-child(4n+3),
-	  .table tbody tr:nth-child(4n+4) { background-color:#f3f4f6; }
-	  */
+				.table tbody tr:nth-child(odd)  { background:#ffffff; }
+				.table tbody tr:nth-child(even) { background:#f3f4f6; }
 
-	  /* ======================================================
-	  LISTRADO 1x1
-	  para alternar clara/escura linha a linha
-	  */
-	  .table tbody tr:nth-child(odd)  { background-color:#ffffff; }  /* ímpares: claras */
-	  .table tbody tr:nth-child(even) { background-color:#f3f4f6; }  /* pares: escuras  */
-  </style>
-</head>
-<body>
-  <table class="page" role="presentation" cellpadding="0" cellspacing="0" width="100%">
-    <tr>
-      <td align="center">
-        <table class="card container" role="presentation" cellpadding="0" cellspacing="0" width="100%">
-          <!-- header -->
-          <tr>
-            <td class="pad">
-              <table role="presentation" cellpadding="0" cellspacing="0" width="100%">
-                <tr>
-                  <td valign="top">
-                    <table role="presentation" cellpadding="0" cellspacing="0" width="100%">
-                      <tr>
-                        <td width="50%" style="padding-bottom:8px;">
-                          <div class="label">
-							  <strong>Nome</strong></div>
-                          <div class="value">{{ aluno.nome }}</div>
-                        </td>
-                        <td width="50%" style="padding-bottom:8px;">
-                          <div class="label"><strong>Curso</strong></div>
-                          <div class="value">{{ aluno.curso ?? "—" }}</div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td width="50%">
-                          <div class="label"><strong>Idade</strong></div>
-                          <div class="value">{{ aluno.idade ?? "—" }}</div>
-                        </td>
-                        <td width="50%">
-                          <div class="label"><strong>Semestre / Módulo</strong></div>
-                          <div class="value">{{ aluno.semestre ?? "—" }}</div>
-                        </td>
-                      </tr>
-                    </table>
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
+				.col { width:50%; }
+				@media (max-width: 640px) {
+				.col { width:100% !important; display:block !important; }
+				}
+			</style>
+		</head>
+	<body>
+		<table class="page" role="presentation" cellpadding="0" cellspacing="0" width="100%">
+			<tr>
+				<td align="center">
+					<table class="card container" role="presentation" cellpadding="0" cellspacing="0" width="100%">
 
-          <tr><td><div class="hr"></div></td></tr>
+						<!-- header -->
+						<tr>
+							<td class="pad">
+								<table role="presentation" cellpadding="0" cellspacing="0" width="100%">
+									<tr>
+										<td valign="top">
+											<table role="presentation" cellpadding="0" cellspacing="0" width="100%">
+												<tr>
+													<td width="50%" style="padding-bottom:8px;">
+														<div class="label">
+															<strong>Nome</strong>
+														</div>
+														<div class="value">{{ aluno.nome }}</div>
+													</td>
+													<td width="50%" style="padding-bottom:8px;">
+														<div class="label">
+															<strong>Curso</strong>
+														</div>
+														<div class="value">{{ aluno.curso ?? "—" }}</div>
+													</td>
+												</tr>
+												<tr>
+													<td width="50%">
+														<div class="label">
+															<strong>Idade</strong>
+														</div>
+														<div class="value">{{ aluno.idade ?? "—" }}</div>
+													</td>
+													<td width="50%">
+														<div class="label">
+															<strong>Semestre / Módulo</strong>
+														</div>
+														<div class="value">{{ aluno.semestre ?? "—" }}</div>
+													</td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
 
-          <!-- tabela -->
-          <tr>
-            <td class="pad" style="padding-top:16px;">
-              <table role="presentation" class="table" cellpadding="0" cellspacing="0" width="100%">
-                <thead>
-                  <tr>
-                    <th class="th">Estilos Parentais</th>
-                    <th class="th" width="120">Pai</th>
-                    <th class="th" width="120">Mãe</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {{ for item in itens }}
-                  <!-- linha principal (categoria) -->
-                  <tr>
-                    <td class="td">{{ item.categoria_abreviacao }}</td>
-                    <td class="td-num">{{ item.total_pai }}</td>
-                    <td class="td-num">{{ item.total_mae }}</td>
-                  </tr>
+						<tr>
+							<td>
+								<div class="hr"></div>
+							</td>
+						</tr>
 
-                  <!-- ==========================================================
-                       LINHA DE DESCRIÇÃO
-                       - Mantida COMENTADA; remova os comentários para exibir.
-                  <tr>
-                    <td class="td descricao" colspan="3" style="background:#ffffff;">
-                      {{ item.categoria_descricao }}
-                    </td>
-                  </tr>
-                  =========================================================== -->
-                  {{ end }}
-                </tbody>
-              </table>
-            </td>
-          </tr>
+						<!-- duas colunas: Mãe | Pai -->
+						<tr>
+							<td class="pad" style="padding-top:16px;">
+								<table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+									<tr>
+										<!-- MÃE -->
+										<td class="col" valign="top" style="padding-right:8px;">
+											<table role="presentation" class="table" cellpadding="0" cellspacing="0" width="100%">
+												<thead>
+													<tr>
+														<th class="th">Estilos</th>
+														<th class="th" width="64">Mãe</th>
+													</tr>
+												</thead>
+												<tbody>
+													{{ for item in itens_mae }}
+													<tr>
+														<td class="td">{{ item.categoria_abreviacao }}</td>
+														<td class="td-num">{{ item.total_mae }}</td>
+													</tr>
+													{{ end }}
+												</tbody>
+											</table>
+										</td>
 
-          <!-- rodapé -->
-          <tr>
-            <td class="pad" style="padding-top:8px; color:#6b7785; font:400 12px/1.6 system-ui; border-top:1px solid #e6eaf0;">
-              © {{ now | date.to_string "%Y" }} • Este é um e-mail automático.
-            </td>
-          </tr>
+										<!-- PAI -->
+										<td class="col" valign="top" style="padding-left:8px;">
+											<table role="presentation" class="table" cellpadding="0" cellspacing="0" width="100%">
+												<thead>
+													<tr>
+														<th class="th">Estilos</th>
+														<th class="th" width="64">Pai</th>
+													</tr>
+												</thead>
+												<tbody>
+													{{ for item in itens_pai }}
+													<tr>
+														<td class="td">{{ item.categoria_abreviacao }}</td>
+														<td class="td-num">{{ item.total_pai }}</td>
+													</tr>
+													{{ end }}
+												</tbody>
+											</table>
+										</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
 
-        </table>
-      </td>
-    </tr>
-  </table>
-</body>
+						<!-- rodapé -->
+						<tr>
+							<td class="pad" style="padding-top:8px; color:#6b7785; font:400 12px/1.6 system-ui; border-top:1px solid #e6eaf0;">
+								© {{ ano_atual }} • Este é um e-mail automático.
+							</td>
+						</tr>
+
+					</table>
+				</td>
+			</tr>
+		</table>
+	</body>
 </html>
